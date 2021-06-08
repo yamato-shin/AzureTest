@@ -1,0 +1,24 @@
+{
+	"name": "Trigger_aks",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "TestMySQL_CosmosDB",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 10,
+				"startTime": "2021-06-08T05:37:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
