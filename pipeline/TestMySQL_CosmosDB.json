@@ -1,0 +1,163 @@
+{
+	"name": "TestMySQL_CosmosDB",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach_aks",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.cw_items",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy_aks",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().source.tableName}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{item().destination.collectionName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "MySqlSource"
+								},
+								"sink": {
+									"type": "CosmosDbSqlApiSink",
+									"writeBatchSize": 0,
+									"writeBehavior": "upsert",
+									"disableMetricsCollection": false,
+									"maxConcurrentConnections": 0
+								},
+								"enableStaging": false,
+								"parallelCopies": 1,
+								"validateDataConsistency": false,
+								"translator": {
+									"value": "@item().copyActivity.translator",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "SourceDataset_aks",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_tableName": "@item().source.tableName"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DestinationDataset_aks",
+									"type": "DatasetReference",
+									"parameters": {
+										"cw_collectionName": "@item().destination.collectionName"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"cw_items": {
+				"type": "Array",
+				"defaultValue": [
+					{
+						"source": {
+							"tableName": "`foo_tbl`"
+						},
+						"destination": {
+							"collectionName": "foo_tbl_azure"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "clm2",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clm2_azure']"
+										}
+									},
+									{
+										"source": {
+											"name": "clm3",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clm3_azure']"
+										}
+									},
+									{
+										"source": {
+											"name": "clm4",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clm4_azure']"
+										}
+									}
+								]
+							}
+						}
+					},
+					{
+						"source": {
+							"tableName": "`hoge_tbl`"
+						},
+						"destination": {
+							"collectionName": "hoge_tbl_azure"
+						},
+						"copyActivity": {
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "clm1",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clm1_azure']"
+										}
+									},
+									{
+										"source": {
+											"name": "clm2",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['clm2_azure']"
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		},
+		"annotations": []
+	}
+}

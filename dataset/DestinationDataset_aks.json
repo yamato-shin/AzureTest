@@ -1,0 +1,23 @@
+{
+	"name": "DestinationDataset_aks",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "test_CosmosDB",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"cw_collectionName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {},
+		"typeProperties": {
+			"collectionName": {
+				"value": "@dataset().cw_collectionName",
+				"type": "Expression"
+			}
+		}
+	}
+}
