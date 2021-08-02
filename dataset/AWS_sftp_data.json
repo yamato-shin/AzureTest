@@ -1,0 +1,17 @@
+{
+	"name": "AWS_sftp_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Sftp1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/home/ec2-user/work"
+			}
+		}
+	}
+}
