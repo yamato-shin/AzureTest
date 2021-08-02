@@ -1,0 +1,77 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "データ ファクトリ名",
+			"defaultValue": "DFSftpTest1"
+		},
+		"Sftp1_privateKeyContent": {
+			"type": "secureString",
+			"metadata": "'Sftp1' の 'privateKeyContent' のセキュリティで保護された文字列"
+		},
+		"Sftp1_passPhrase": {
+			"type": "secureString",
+			"metadata": "'Sftp1' の 'passPhrase' のセキュリティで保護された文字列"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzureBlobStorage1' の 'connectionString' のセキュリティで保護された文字列"
+		},
+		"Sftp1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "ec2-18-118-130-158.us-east-2.compute.amazonaws.com"
+		},
+		"Sftp1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "ec2-user"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "リンクされた ARM テンプレートを含むストレージ アカウントの URI"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "リンクされた ARM テンプレートを格納するストレージ アカウントへの SAS トークン"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "DFSftpTest1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Sftp1_privateKeyContent": {
+						"value": "[parameters('Sftp1_privateKeyContent')]"
+					},
+					"Sftp1_passPhrase": {
+						"value": "[parameters('Sftp1_passPhrase')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"Sftp1_properties_typeProperties_host": {
+						"value": "[parameters('Sftp1_properties_typeProperties_host')]"
+					},
+					"Sftp1_properties_typeProperties_userName": {
+						"value": "[parameters('Sftp1_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
