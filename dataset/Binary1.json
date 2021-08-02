@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "*",
 				"folderPath": "/home/ec2-user/work/sftp"
 			}
 		}
