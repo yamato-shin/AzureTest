@@ -20,7 +20,7 @@
 						"storeSettings": {
 							"type": "SftpReadSettings",
 							"recursive": true,
-							"deleteFilesAfterCompletion": true
+							"deleteFilesAfterCompletion": false
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings"
