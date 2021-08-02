@@ -69,7 +69,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"functionName": "Function1",
-					"method": "POST"
+					"method": "GET"
 				},
 				"linkedServiceName": {
 					"referenceName": "ImportCsv1",
