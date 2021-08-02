@@ -7,6 +7,14 @@
 			"metadata": "データ ファクトリ名",
 			"defaultValue": "DFSftpTest1"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzureBlobStorage1' の 'connectionString' のセキュリティで保護された文字列"
+		},
+		"ImportCsv1_functionKey": {
+			"type": "secureString",
+			"metadata": "'ImportCsv1' の 'functionKey' のセキュリティで保護された文字列"
+		},
 		"Sftp1_privateKeyContent": {
 			"type": "secureString",
 			"metadata": "'Sftp1' の 'privateKeyContent' のセキュリティで保護された文字列"
@@ -15,9 +23,9 @@
 			"type": "secureString",
 			"metadata": "'Sftp1' の 'passPhrase' のセキュリティで保護された文字列"
 		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "'AzureBlobStorage1' の 'connectionString' のセキュリティで保護された文字列"
+		"ImportCsv1_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://sftpimportsample1.azurewebsites.net"
 		},
 		"Sftp1_properties_typeProperties_host": {
 			"type": "string",
@@ -54,14 +62,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"ImportCsv1_functionKey": {
+						"value": "[parameters('ImportCsv1_functionKey')]"
+					},
 					"Sftp1_privateKeyContent": {
 						"value": "[parameters('Sftp1_privateKeyContent')]"
 					},
 					"Sftp1_passPhrase": {
 						"value": "[parameters('Sftp1_passPhrase')]"
 					},
-					"AzureBlobStorage1_connectionString": {
-						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					"ImportCsv1_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('ImportCsv1_properties_typeProperties_functionAppUrl')]"
 					},
 					"Sftp1_properties_typeProperties_host": {
 						"value": "[parameters('Sftp1_properties_typeProperties_host')]"

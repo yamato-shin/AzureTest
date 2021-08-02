@@ -7,6 +7,14 @@
 			"metadata": "データ ファクトリ名",
 			"defaultValue": "DFSftpTest1"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "'AzureBlobStorage1' の 'connectionString' のセキュリティで保護された文字列"
+		},
+		"ImportCsv1_functionKey": {
+			"type": "secureString",
+			"metadata": "'ImportCsv1' の 'functionKey' のセキュリティで保護された文字列"
+		},
 		"Sftp1_privateKeyContent": {
 			"type": "secureString",
 			"metadata": "'Sftp1' の 'privateKeyContent' のセキュリティで保護された文字列"
@@ -15,9 +23,9 @@
 			"type": "secureString",
 			"metadata": "'Sftp1' の 'passPhrase' のセキュリティで保護された文字列"
 		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "'AzureBlobStorage1' の 'connectionString' のセキュリティで保護された文字列"
+		"ImportCsv1_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://sftpimportsample1.azurewebsites.net"
 		},
 		"Sftp1_properties_typeProperties_host": {
 			"type": "string",
@@ -32,6 +40,37 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ImportCsv1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFunction",
+				"typeProperties": {
+					"functionAppUrl": "[parameters('ImportCsv1_properties_typeProperties_functionAppUrl')]",
+					"functionKey": {
+						"type": "SecureString",
+						"value": "[parameters('ImportCsv1_functionKey')]"
+					},
+					"authentication": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Sftp1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -53,19 +92,6 @@
 						"type": "SecureString",
 						"value": "[parameters('Sftp1_passPhrase')]"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -167,13 +193,43 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Azure Function1",
+						"type": "AzureFunctionActivity",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"functionName": "Function1",
+							"method": "GET",
+							"headers": {}
+						},
+						"linkedServiceName": {
+							"referenceName": "ImportCsv1",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AWS_sftp_data')]",
-				"[concat(variables('factoryId'), '/datasets/Azure_blob_sftp_test')]"
+				"[concat(variables('factoryId'), '/datasets/Azure_blob_sftp_test')]",
+				"[concat(variables('factoryId'), '/linkedServices/ImportCsv1')]"
 			]
 		},
 		{
@@ -182,7 +238,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
