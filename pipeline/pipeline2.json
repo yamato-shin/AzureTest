@@ -30,6 +30,7 @@
 						"type": "BinarySink",
 						"storeSettings": {
 							"type": "SftpWriteSettings",
+							"maxConcurrentConnections": 1,
 							"copyBehavior": "PreserveHierarchy",
 							"operationTimeout": "01:00:00",
 							"useTempFileRename": true
