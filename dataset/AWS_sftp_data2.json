@@ -2,7 +2,7 @@
 	"name": "AWS_sftp_data2",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Sftp1",
+			"referenceName": "Sftp2",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
