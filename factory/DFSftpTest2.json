@@ -1,0 +1,9 @@
+{
+	"name": "DFSftpTest2",
+	"location": "japaneast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "43baf762-0de2-45c5-ba87-c743ba36c9cf",
+		"tenantId": "a19f121d-81e1-4858-a9d8-736e267fd4c7"
+	}
+}
