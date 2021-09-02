@@ -37,13 +37,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AWS_sftp_data",
+						"referenceName": "AWS_sftp_data2",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Azure_blob_sftp_test",
+						"referenceName": "Azure_blob_sftp_test2",
 						"type": "DatasetReference"
 					}
 				]
