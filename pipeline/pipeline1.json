@@ -20,7 +20,7 @@
 						"storeSettings": {
 							"type": "SftpReadSettings",
 							"recursive": true,
-							"wildcardFolderPath": "/home/ec2-user/work2/*",
+							"wildcardFolderPath": "/home/ec2-user/work2",
 							"wildcardFileName": "*.dat",
 							"deleteFilesAfterCompletion": true
 						},
