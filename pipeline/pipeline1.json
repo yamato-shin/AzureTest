@@ -20,6 +20,8 @@
 						"storeSettings": {
 							"type": "SftpReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "*",
+							"wildcardFileName": "*.dat",
 							"deleteFilesAfterCompletion": true
 						},
 						"formatSettings": {
